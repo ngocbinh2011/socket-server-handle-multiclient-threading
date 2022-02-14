@@ -27,18 +27,19 @@ public class ClientSocketConnection implements IClientSocketConnection, IMessage
     public Socket connect() throws IOException {
         System.out.println("Connecting...");
         System.out.printf("Connect success to Server on port %d!\n", socket.getLocalPort());
-        System.out.println("-----------------------------------");
+        System.out.println("############################");
         boolean isQuit = false;
-        while (!isQuit){
+        while (!isQuit) {
             System.out.print("Please enter your command: ");
             Scanner scanner = Scannable.getScanner();
             String command = scanner.nextLine();
-            if(command.equals("quit")){
+            if (command.equals("quit")) {
                 isQuit = true;
             }
             sendMessage(command);
+            System.out.println("Please wait while server process...");
             String result = getMessage();
-            System.out.println(String.format("Server Response for command '%s': %s", command, result));
+            System.out.println(String.format("==> Server Response for command '%s': %s", command, result));
         }
 
         return socket;

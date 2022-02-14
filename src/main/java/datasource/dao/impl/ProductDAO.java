@@ -15,7 +15,7 @@ public class ProductDAO extends ServiceDAO<Product> implements IProductDAO {
     public Product findById(String id) {
         String sql = "SELECT * FROM products WHERE id = ?";
         List<Product> list = query(sql, mapper, id);
-        return list.isEmpty()? null : list.get(0);
+        return list.isEmpty() ? null : list.get(0);
     }
 
     @Override
@@ -26,7 +26,7 @@ public class ProductDAO extends ServiceDAO<Product> implements IProductDAO {
 
     @Override
     public Product save(Product product) {
-        synchronized (Product.class){
+        synchronized (Product.class) {
             String sql = "INSERT INTO products(id, name, price) VALUES(?,?,?)";
             insert(sql, product.getId(), product.getName(), product.getPrice());
             return product;
@@ -35,7 +35,7 @@ public class ProductDAO extends ServiceDAO<Product> implements IProductDAO {
 
     @Override
     public void delete(String id) {
-        synchronized (Product.class){
+        synchronized (Product.class) {
             String sql = "DELETE FROM products WHERE id = ?";
             delete(sql, id);
         }
@@ -43,7 +43,7 @@ public class ProductDAO extends ServiceDAO<Product> implements IProductDAO {
 
     @Override
     public Product update(Product product) {
-        synchronized (Product.class){
+        synchronized (Product.class) {
             String sql = "UPDATE products SET price = ? WHERE id = ?";
             update(sql, product.getPrice(), product.getId());
             return findById(product.getId());

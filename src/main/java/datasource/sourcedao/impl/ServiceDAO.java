@@ -28,7 +28,7 @@ public abstract class ServiceDAO<T> implements IServiceDAO<T> {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             statementMapping.mapping(preparedStatement, member);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 result.add(mapper.mapping(resultSet));
             }
         } catch (SQLException e) {
@@ -43,7 +43,7 @@ public abstract class ServiceDAO<T> implements IServiceDAO<T> {
         return result;
     }
 
-    protected boolean modify(String sql, Object... member){
+    protected boolean modify(String sql, Object... member) {
         Connection connection = connector.getConnection();
         boolean isSuccess = false;
         PreparedStatement preparedStatement = null;

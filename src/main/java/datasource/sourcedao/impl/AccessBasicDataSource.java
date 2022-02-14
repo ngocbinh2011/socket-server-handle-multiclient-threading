@@ -10,15 +10,15 @@ public class AccessBasicDataSource implements IDatasource {
 
     private static BasicDataSource basicDataSource;
 
-    public AccessBasicDataSource(){
+    public AccessBasicDataSource() {
 
     }
 
     @Override
     public DataSource getDatasource() {
-        if(basicDataSource == null){
-            synchronized (AccessBasicDataSource.class){
-                if(basicDataSource == null){
+        if (basicDataSource == null) {
+            synchronized (AccessBasicDataSource.class) {
+                if (basicDataSource == null) {
                     Settings settings = Settings.getInstance();
                     basicDataSource = new BasicDataSource();
                     basicDataSource.setUrl(settings.DATABASE_URL);

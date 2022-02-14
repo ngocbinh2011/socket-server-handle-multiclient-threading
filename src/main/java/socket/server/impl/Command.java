@@ -23,12 +23,12 @@ public enum Command {
     public static Command getCommand(String command) throws CommandNotFoundException {
         Command[] cmds = Command.values();
         Command result = null;
-        for(Command c: cmds){
-            if(c.getValue().equals(command)){
+        for (Command c : cmds) {
+            if (c.getValue().equals(command)) {
                 result = c;
             }
         }
-        if(result == null){
+        if (result == null) {
             throw new CommandNotFoundException(String.format("command %s not supported!", command));
         }
         return result;

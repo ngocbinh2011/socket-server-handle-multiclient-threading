@@ -18,9 +18,11 @@ public class ServerTaskProcessRunnable implements Runnable, IMessageTranformer {
     private Socket socket;
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
+    private IProductDAO productDAO;
 
     public ServerTaskProcessRunnable(Socket socket) throws IOException {
         this.socket = socket;
+        productDAO = new ProductDAO();
         bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
         bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
     }
@@ -42,7 +44,6 @@ public class ServerTaskProcessRunnable implements Runnable, IMessageTranformer {
     public void run() {
         boolean isQuit = false;
         try {
-            IProductDAO productDAO = new ProductDAO();
             while (!isQuit) {
                 String commandString = getMessage();
                 Thread thread = Thread.currentThread();
@@ -61,7 +62,7 @@ public class ServerTaskProcessRunnable implements Runnable, IMessageTranformer {
                     command = Command.getCommand(cmd);
                     switch (command) {
                         case SAVE_PRODUCT:
-                            if(productDAO.isExists(arr[1])){
+                            if (productDAO.isExists(arr[1])) {
                                 sendMessage(String.format("[Product Id - %s] already exists!", arr[1]));
                                 continue;
                             }
@@ -106,6 +107,7 @@ public class ServerTaskProcessRunnable implements Runnable, IMessageTranformer {
             e.printStackTrace();
         } finally {
             try {
+                bufferedWriter.close();
                 bufferedReader.close();
             } catch (IOException e) {
                 e.printStackTrace();
